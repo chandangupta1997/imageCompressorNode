@@ -62,9 +62,11 @@ app.post('/upload', upload.single('image'), (req, res) => {
       }
 
       // Use sharp to create a new image with the new dimensions
+      console.log(req.file.path)
       return sharp(req.file.path)
         .resize(Math.round(newWidth), Math.round(newHeight))
-        .toFile('compressed/' + req.file.filename);
+        .toFormat(`png`)  
+        .toFile('compressed/' + req.file.filename); // binary 
     })
     .then(() => {
       // Send the user's browser to the compressed image's URL
